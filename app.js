@@ -53,15 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function sendDataToSheet(action, username) {
-        fetch("https://script.google.com/macros/s/AKfycbynFQ-whn8Rg_-r7tP_9ACW6MZgVycB0Kj67pusp0zeVajr2a13rdpNcdwXYkR9s8BC/exec", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                action,
-                username
-            }),
+        fetch(`https://script.google.com/macros/s/AKfycbynFQ-whn8Rg_-r7tP_9ACW6MZgVycB0Kj67pusp0zeVajr2a13rdpNcdwXYkR9s8BC/exec?action=${action}&username=${encodeURIComponent(username)}`, {
+            method: "GET",
+            redirect: "follow",
         })
             .then((response) => response.json())
             .then((data) => {
