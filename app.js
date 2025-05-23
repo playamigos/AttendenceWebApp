@@ -67,6 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    function showLoader() {
+        document.getElementById("loader-overlay").style.display = "flex";
+    }
+
+    function hideLoader() {
+        document.getElementById("loader-overlay").style.display = "none";
+    }
+
     loginButton.addEventListener("click", () => {
         const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value;
@@ -88,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const user = loadUser();
         if (!user) return showLoginScreen();
 
+        showLoader();
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const userCoords = {
@@ -96,13 +105,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 if (isWithinRadius(userCoords, PREDEFINED_COORDINATES, RADIUS)) {
-                    sendDataToSheet("checkin", user.username);
+                    sendDataToSheet("checkin", user.username).finally(hideLoader);
                 } else {
                     alert("You are not within the allowed location.");
+                    hideLoader();
                 }
             },
             () => {
                 alert("Failed to get your location.");
+                hideLoader();
             }
         );
     });
@@ -111,6 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const user = loadUser();
         if (!user) return showLoginScreen();
 
+        if (!confirm("Are you sure you want to check out?")) return;
+
+        showLoader();
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const userCoords = {
@@ -119,13 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 if (isWithinRadius(userCoords, PREDEFINED_COORDINATES, RADIUS)) {
-                    sendDataToSheet("checkout", user.username);
+                    sendDataToSheet("checkout", user.username).finally(hideLoader);
                 } else {
                     alert("You are not within the allowed location.");
+                    hideLoader();
                 }
             },
             () => {
                 alert("Failed to get your location.");
+                hideLoader();
             }
         );
     });
