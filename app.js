@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function sendDataToSheet(action, username) {
-        fetch(`https://script.google.com/macros/s/AKfycbynFQ-whn8Rg_-r7tP_9ACW6MZgVycB0Kj67pusp0zeVajr2a13rdpNcdwXYkR9s8BC/exec?action=${action}&username=${encodeURIComponent(username)}`, {
+        return fetch(`https://script.google.com/macros/s/AKfycbynFQ-whn8Rg_-r7tP_9ACW6MZgVycB0Kj67pusp0zeVajr2a13rdpNcdwXYkR9s8BC/exec?action=${action}&username=${encodeURIComponent(username)}`, {
             method: "GET",
             redirect: "follow",
         })
@@ -64,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch((error) => {
                 console.error("Error:", error);
                 alert("Failed to send data.");
+            })
+            .finally(() => {
+                hideLoader();
             });
     }
 
@@ -105,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 if (isWithinRadius(userCoords, PREDEFINED_COORDINATES, RADIUS)) {
-                    sendDataToSheet("checkin", user.username).finally(hideLoader);
+                    sendDataToSheet("checkin", user.username);
                 } else {
                     alert("You are not within the allowed location.");
                     hideLoader();
@@ -133,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 if (isWithinRadius(userCoords, PREDEFINED_COORDINATES, RADIUS)) {
-                    sendDataToSheet("checkout", user.username).finally(hideLoader);
+                    sendDataToSheet("checkout", user.username);
                 } else {
                     alert("You are not within the allowed location.");
                     hideLoader();
