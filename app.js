@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetButton = document.getElementById("reset-button");
 
     const LOCAL_STORAGE_KEY = "attendanceAppUser";
-    const PREDEFINED_COORDINATES = { lat: 37.7749, lng: -122.4194 }; // Example: San Francisco
+    const PREDEFINED_COORDINATES = { lat: 17.453832400624453, lng: 78.39447955563158 }; // 2020 productions office
     const RADIUS = 500; // in meters
 
     function loadUser() {
@@ -53,16 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function sendDataToSheet(action, username) {
-        const timestamp = new Date().toISOString();
-        fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbynFQ-whn8Rg_-r7tP_9ACW6MZgVycB0Kj67pusp0zeVajr2a13rdpNcdwXYkR9s8BC/exec", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 action,
-                username,
-                timestamp,
+                username
             }),
         })
             .then((response) => response.json())
@@ -76,14 +74,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loginButton.addEventListener("click", () => {
-        const username = document.getElementById("username").value;
+        const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value;
 
-        if (username && password) {
+        if (!username) {
+            alert("Username cannot be empty.");
+            return;
+        }
+
+        if (password === "!@#Qwe123") {
             saveUser({ username, password });
             showMainScreen();
         } else {
-            alert("Please enter both username and password.");
+            alert("Invalid password. Please try again.");
         }
     });
 

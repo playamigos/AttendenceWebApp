@@ -8,7 +8,7 @@
     <title>Attendance App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,40 +16,79 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
         }
-        .hidden {
-            display: none;
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
         }
-        .button {
-            margin: 10px;
-            padding: 15px 30px;
+
+        input {
+            width: 90%;
+            max-width: 400px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             font-size: 16px;
-            cursor: pointer;
+        }
+
+        .button {
+            width: 90%;
+            max-width: 400px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 16px;
             border: none;
             border-radius: 5px;
-            background-color: #007bff;
+            cursor: pointer;
             color: white;
+            background-color: #007bff;
+            transition: background-color 0.3s;
         }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
         .button.reset {
             background-color: #dc3545;
-            font-size: 12px;
-            padding: 5px 10px;
+            font-size: 14px;
+            padding: 10px;
             position: absolute;
             top: 10px;
             right: 10px;
         }
+
+        .button.reset:hover {
+            background-color: #a71d2a;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: white;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div id="login-screen">
+    <div id="login-screen" class="container">
         <h1>Welcome</h1>
         <input type="text" id="username" placeholder="Enter Username" required>
         <input type="password" id="password" placeholder="Enter Master Password" required>
         <button class="button" id="login-button">Login</button>
     </div>
 
-    <div id="main-screen" class="hidden">
+    <div id="main-screen" class="container hidden">
         <button class="button" id="checkin-button">Check In</button>
         <button class="button" id="checkout-button">Check Out</button>
         <button class="button reset" id="reset-button">Reset App</button>
